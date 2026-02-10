@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وصفات رمضان 🍽️ - مكتبتي الرمضانية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdf4ff 0%, #f0f9ff 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+        
+        /* الهيدر */
+        .header {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '🍽️';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.2;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* زر العودة */
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 3;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+        
+        /* الحاوية الرئيسية */
+        .container {
+            padding: 2rem 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* قسمين فقط */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* بطاقة القسم */
+        .category-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            border: 3px solid transparent;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .savory-card:hover {
+            border-color: #f97316;
+        }
+        
+        .sweets-card:hover {
+            border-color: #ec4899;
+        }
+        
+        /* صورة القسم */
+        .category-image {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .category-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+        }
+        
+        /* أيقونة كبيرة في المنتصف */
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .category-card:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: white;
+        }
+        
+        .savory-icon {
+            color: #f97316;
+        }
+        
+        .sweets-icon {
+            color: #ec4899;
+        }
+        
+        /* محتوى البطاقة */
+        .category-content {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        
+        .category-desc {
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* صفحة الوصفات */
+        .recipes-page {
+            display: none;
+        }
+        
+        /* شبكة الوصفات */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 640px) {
+            .recipes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* بطاقة الوصفة */
+        .recipe-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .recipe-content {
+            padding: 1.5rem;
+        }
+        
+        .recipe-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #1f2937;
+        }
+        
+        .recipe-desc {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+        
+        /* التذييل */
+        .footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- الصفحة الرئيسية - قسمين فقط -->
+<div id="homePage">
+    <div class="header">
+        <h1>🍽️ وصفات رمضان</h1>
+        <p>اختر تصنيف الوصفات لتبدأ رحلتك الطهوية</p>
+    </div>
+    
+    <div class="container">
+        <div class="categories-grid">
+            <!-- قسم المملحات -->
+            <a href="javascript:void(0)" class="category-card savory-card" onclick="showRecipes('savory')">
+                <div class="category-image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhUO8nR-W4XfPRh20YAl7sShAC8W38hsNHcw&s');">
+                   
+                </div>
+                <div class="category-content">
+                    <h2 class="category-title">مملحات</h2>
+                    <p class="category-desc">وصفات مالحة شهية ومقبلات لسفرة إفطار رمضان</p>
+                </div>
+            </a>
+            
+            <!-- قسم التحليات -->
+            <a href="javascript:void(0)" class="category-card sweets-card" onclick="showRecipes('sweets')">
+                <div class="category-image" style="background-image: url('https://img-global.cpcdn.com/recipes/ecbb1a15f30d598c/200x200cq80/%D8%A7%D9%84%D8%B5%D9%88%D8%B1%D8%A9-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D8%A9-%D9%84%D9%88%D8%B5%D9%81%D8%A9%D8%AD%D9%84%D9%89-%D9%83%D8%A7%D8%B3%D8%A7%D8%AA-verrines.jpg');">
+                   
+                </div>
+                <div class="category-content">
+                    <h2 class="category-title">تحليات</h2>
+                    <p class="category-desc">حلويات رمضانية لذيذة لتحلية الأفطار والسحور</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- صفحة وصفات المملحات -->
+<div id="savoryPage" class="container recipes-page">
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        <h1>🍲 مملحات رمضانية</h1>
+        <p>وصفات مالحة شهية لسفرة الإفطار</p>
+    </div>
+    
+    <div class="recipes-grid" id="savoryRecipes">
+        <!-- وصفات المملحات -->
+    </div>
+</div>
+
+<!-- صفحة وصفات التحليات -->
+<div id="sweetsPage" class="container recipes-page">
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        <h1>🍰 تحليات رمضانية</h1>
+        <p>حلويات لذيذة لتحلية الإفطار</p>
+    </div>
+    
+    <div class="recipes-grid" id="sweetsRecipes">
+        <!-- وصفات التحليات -->
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>وصفات رمضان 🍽️ - مكتبتي الرمضانية</p>
+        <p>© 2023 - وصفات مصورة بالفيديو</p>
+    </div>
+</footer>
+
+<script>
+    // قاعدة بيانات الوصفات
+    const recipesData = {
+        savory: [
+            {
+                id: 1,
+                title: "سفنج بالتونة",
+                description: "فطائر رقيقة محشوة بالتونة والبيض والبقدونس، مثالية لبداية الإفطار.",
+                prepTime: "40 دقيقة",
+                servings: "6 أشخاص",
+                image: "https://images.unsplash.com/photo-1563379091339-03246963d9d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                title: "سمبوسك باللحم",
+                description: "عجينة رقيقة محشوة باللحم المفروم المعطر بالبهارات العربية.",
+                prepTime: "55 دقيقة",
+                servings: "8 أشخاص",
+                image: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                title: "كبة مقلية",
+                description: "كبة برغل محشوة باللحم المفروم ومقلية حتى الذهبية.",
+                prepTime: "1 ساعة 20 دقيقة",
+                servings: "6 أشخاص",
+                image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 4,
+                title: "ورق عنب محشي",
+                description: "أوراق عنب طازجة محشية بالأرز واللحم المفروم والبهارات.",
+                prepTime: "1.5 ساعة",
+                servings: "8 أشخاص",
+                image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ],
+        sweets: [
+            {
+                id: 1,
+                title: "قطايف بالقشطة",
+                description: "قطايف محشوة بالقشطة الطازجة ومقلية حتى الذهبية ومغطاة بالقطر.",
+                prepTime: "1 ساعة 15 دقيقة",
+                servings: "10 أشخاص",
+                image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                title: "كنافة بالنوتيلا",
+                description: "كنافة هشة مع حشوة كريمة من النوتيلا، لقمة تذوب في الفم.",
+                prepTime: "50 دقيقة",
+                servings: "8 أشخاص",
+                image: "https://images.unsplash.com/photo-1586788680434-30d324b2d46f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                title: "بقلاوة بالفستق",
+                description: "طبقات رقيقة من العجينة محشوة بالفستق الحلبي والمغطاة بالقطر.",
+                prepTime: "1.5 ساعة",
+                servings: "12 أشخاص",
+                image: "https://images.unsplash.com/photo-1624353365286-3f8d62dadadf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 4,
+                title: "أم علي",
+                description: "حلوى دافئة من الرقائق والمكسرات والكريمة والقشطة.",
+                prepTime: "40 دقيقة",
+                servings: "6 أشخاص",
+                image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    };
+    
+    // عرض صفحة الوصفات
+    function showRecipes(type) {
+        // إخفاء الصفحة الرئيسية
+        document.getElementById('homePage').style.display = 'none';
+        
+        // إظهار صفحة الوصفات المناسبة
+        const pageId = type + 'Page';
+        document.getElementById(pageId).style.display = 'block';
+        
+        // الحصول على عنصر الشبكة
+        const gridId = type + 'Recipes';
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = '';
+        
+        // الحصول على الوصفات المناسبة
+        const recipes = recipesData[type];
+        
+        // إضافة كل وصفة إلى الشبكة
+        recipes.forEach(recipe => {
+            const recipeCard = document.createElement('div');
+            recipeCard.className = 'recipe-card';
+            
+            recipeCard.innerHTML = `
+                <div class="recipe-image" style="background-image: url('${recipe.image}')"></div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">${recipe.title}</h3>
+                    <p class="recipe-desc">${recipe.description}</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> ${recipe.prepTime}</span>
+                        <span><i class="fas fa-user-friends"></i> ${recipe.servings}</span>
+                    </div>
+                </div>
+            `;
+            
+            grid.appendChild(recipeCard);
+        });
+    }
+    
+    // العودة للصفحة الرئيسية
+    function goBack() {
+        // إخفاء جميع صفحات الوصفات
+        document.getElementById('savoryPage').style.display = 'none';
+        document.getElementById('sweetsPage').style.display = 'none';
+        
+        // إظهار الصفحة الرئيسية
+        document.getElementById('homePage').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

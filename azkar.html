@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأذكار اليومية 📿</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Tajawal", sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: #4CAF50;
+            padding: 25px 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        
+        .header p {
+            margin-top: 8px;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .content {
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .azkar-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .azkar-card {
+            background: white;
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: block;
+        }
+        
+        .azkar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            padding: 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .card-desc {
+            padding: 20px;
+            color: #666;
+            background: #fafafa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .morning .card-header { background: linear-gradient(135deg, #FF9800, #FFB74D); }
+        .evening .card-header { background: linear-gradient(135deg, #673AB7, #9575CD); }
+        .prayer .card-header { background: linear-gradient(135deg, #2196F3, #64B5F6); }
+        .sleep .card-header { background: linear-gradient(135deg, #9C27B0, #BA68C8); }
+        .wake .card-header { background: linear-gradient(135deg, #009688, #4DB6AC); }
+        
+        .footer {
+            text-align: center;
+            padding: 25px 20px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .card-header {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📿 الأذكار اليومية</h1>
+        <p>اختر نوع الأذكار الذي تريد قراءته</p>
+    </div>
+    
+    <div class="content">
+        <div class="azkar-grid">
+            <a href="الصباح.html" class="azkar-card morning">
+                <div class="card-header">
+                    <div class="card-title">أذكار الصباح</div>
+                    <div class="card-icon">☀️</div>
+                </div>
+                <div class="card-desc">
+                    <span>من طلوع الفجر إلى زوال الشمس</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">5 أذكار</span>
+                </div>
+            </a>
+            
+            <a href="المساء.html" class="azkar-card evening">
+                <div class="card-header">
+                    <div class="card-title">أذكار المساء</div>
+                    <div class="card-icon">🌙</div>
+                </div>
+                <div class="card-desc">
+                    <span>من بعد العصر إلى غروب الشمس</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">5 أذكار</span>
+                </div>
+            </a>
+            
+            <a href="prayer_azkar.html" class="azkar-card prayer">
+                <div class="card-header">
+                    <div class="card-title">أذكار بعد الصلاة</div>
+                    <div class="card-icon">🕌</div>
+                </div>
+                <div class="card-desc">
+                    <span>بعد الانتهاء من الصلوات</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">5 أذكار</span>
+                </div>
+            </a>
+            
+            <a href="النوم.html" class="azkar-card sleep">
+                <div class="card-header">
+                    <div class="card-title">أذكار النوم</div>
+                    <div class="card-icon">😴</div>
+                </div>
+                <div class="card-desc">
+                    <span>قبل النوم للتحصين والحفظ</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">5 أذكار</span>
+                </div>
+            </a>
+            
+            <a href="الاستقاظ.html" class="azkar-card wake">
+                <div class="card-header">
+                    <div class="card-title">أذكار الاستيقاظ</div>
+                    <div class="card-icon">⏰</div>
+                </div>
+                <div class="card-desc">
+                    <span>عند الاستيقاظ من النوم</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">4 أذكار</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>"وذكر فإن الذكرى تنفع المؤمنين"</p>
+        <p style="margin-top: 8px; font-size: 0.85rem; color: #888;">حافظ على الأذكار، فهي نور في الدنيا والآخرة</p>
+    </div>
+</body>
+</html>

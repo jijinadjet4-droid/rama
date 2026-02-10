@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>أذكار المساء 🌙</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Tajawal", sans-serif;
+        }
+        
+        body {
+            background: #f8f8ff;
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #673AB7, #9575CD);
+            padding: 20px 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(103, 58, 183, 0.2);
+            position: relative;
+        }
+        
+        .back-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .content {
+            padding: 15px;
+        }
+        
+        .zekr-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-right: 4px solid #673AB7;
+        }
+        
+        .zekr-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+            padding: 15px;
+            background: #F3E5F5;
+            border-radius: 10px;
+        }
+        
+        .fadl-section {
+            background: #F1F8E9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 3px solid #4CAF50;
+        }
+        
+        .fadl-title {
+            color: #2E7D32;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .fadl-text {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .counter-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            background: #673AB7;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .counter-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .counter-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #673AB7;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .progress {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .footer-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #673AB7;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .footer-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .toast.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-btn">←</a>
+        <h1>🌙 أذكار المساء</h1>
+    </div>
+    
+    <div class="content" id="azkarList">
+        <!-- الأذكار تضاف هنا -->
+    </div>
+    
+    <div class="footer">
+        <button class="footer-btn" onclick="completeAll()">تحديد الكل</button>
+        <button class="footer-btn" onclick="resetAll()" style="background: #f44336;">إعادة تعيين</button>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const azkar = [
+            {
+                id: 1,
+                text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+                times: 3,
+                current: 0,
+                fadl: "من قالها حين يمسي أُجير من الشيطان حتى يصبح"
+            },
+            {
+                id: 2,
+                text: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+                times: 1,
+                current: 0,
+                fadl: "من قالها حين يمسي كتب الله له براءة من النار"
+            },
+            {
+                id: 3,
+                text: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَكَفَانَا وَآوَانَا",
+                times: 1,
+                current: 0,
+                fadl: "من قالها حين يمسي فقد أدى شكر يومه"
+            },
+            {
+                id: 4,
+                text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+                times: 100,
+                current: 0,
+                fadl: "من قالها في المساء مائة مرة حطت خطاياه ولو كانت مثل زبد البحر"
+            },
+            {
+                id: 5,
+                text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ",
+                times: 1,
+                current: 0,
+                fadl: "من قالها دبر صلاة المغرب كان له عدل رقبة من ولد إسماعيل"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            renderAzkar();
+        });
+
+        function renderAzkar() {
+            const container = document.getElementById('azkarList');
+            container.innerHTML = '';
+            
+            azkar.forEach(zekr => {
+                const percent = (zekr.current / zekr.times) * 100;
+                
+                const card = document.createElement('div');
+                card.className = 'zekr-card';
+                card.innerHTML = `
+                    <div class="zekr-text">${zekr.text}</div>
+                    
+                    <div class="fadl-section">
+                        <div class="fadl-title">🌟 الفضل والثواب:</div>
+                        <div class="fadl-text">${zekr.fadl}</div>
+                    </div>
+                    
+                    <div class="counter">
+                        <button class="counter-btn" onclick="decrease(${zekr.id})">-</button>
+                        <div class="counter-display">${zekr.current} / ${zekr.times}</div>
+                        <button class="counter-btn" onclick="increase(${zekr.id})">+</button>
+                    </div>
+                    
+                    <div class="progress">
+                        <div class="progress-fill" style="width: ${percent}%"></div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function increase(id) {
+            const zekr = azkar.find(z => z.id === id);
+            if (zekr && zekr.current < zekr.times) {
+                zekr.current++;
+                saveProgress();
+                renderAzkar();
+                
+                if (zekr.current >= zekr.times) {
+                    showToast('تم إكمال الذكر! 🎉 ' + zekr.fadl);
+                }
+            }
+        }
+
+        function decrease(id) {
+            const zekr = azkar.find(z => z.id === id);
+            if (zekr && zekr.current > 0) {
+                zekr.current--;
+                saveProgress();
+                renderAzkar();
+            }
+        }
+
+        function completeAll() {
+            azkar.forEach(zekr => {
+                zekr.current = zekr.times;
+            });
+            saveProgress();
+            renderAzkar();
+            showToast('تم تحديد جميع الأذكار! ✅ نلت الأجر كاملاً إن شاء الله');
+        }
+
+        function resetAll() {
+            if (confirm('هل تريد إعادة تعيين جميع العدادات؟')) {
+                azkar.forEach(zekr => {
+                    zekr.current = 0;
+                });
+                saveProgress();
+                renderAzkar();
+                showToast('تم إعادة التعيين 🔄');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function saveProgress() {
+            localStorage.setItem('eveningAzkar', JSON.stringify(azkar));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('eveningAzkar');
+            if (saved) {
+                const savedAzkar = JSON.parse(saved);
+                savedAzkar.forEach(savedZekr => {
+                    const zekr = azkar.find(z => z.id === savedZekr.id);
+                    if (zekr) {
+                        zekr.current = savedZekr.current;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
